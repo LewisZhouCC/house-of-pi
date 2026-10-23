@@ -13,7 +13,9 @@ export function stringEnum<const T extends readonly string[]>(
 }
 
 export function nullable<T extends TSchema>(schema: T, description: string) {
-  return Type.Optional(Type.Union([schema, Type.Null()], { description }));
+  return Type.Optional(
+    Type.Unsafe<T | null>({ ...schema, nullable: true, description }),
+  );
 }
 
 const PAGINATION_ORDER_BY_VALUES = ['createdAt', 'updatedAt'] as const;
